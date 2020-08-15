@@ -1,6 +1,7 @@
+const path = require('path');
 const getFile = require('../helpers');
 
-const getCards = (req, res) => getFile(__dirname, '../data/cards.json')
+const getCards = (req, res) => getFile(path.join(__dirname, '../data/cards.json'))
   .then((data) => {
     res
       .status(200)

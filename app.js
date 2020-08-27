@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 const bodyParser = require('body-parser');
 const { userRouter, cardsRouter } = require('./routes');
 
@@ -17,7 +16,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   req.user = {
     _id: '5f467b46459efc584e599f12',

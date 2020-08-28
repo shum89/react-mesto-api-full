@@ -1,4 +1,4 @@
-const regExpUrl = /http(s?):\/\/(www\.)?[a-z0-9]+([-.][a-z0-9]+)*\.[a-z]{2,}(\/.*)/;
+const regExpUrl = /https?:\/\/(www\.)?([-a-z0-9]+\.)([0-9a-z].*)/;
 const regExpEmpty = /^\S/;
 /**
  * validate URL

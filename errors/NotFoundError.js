@@ -6,6 +6,7 @@ class NotFoundError extends Error {
     super(args);
     this.message = message;
     this.status = 404;
+    this.name = this.constructor.name;
   }
 }
 

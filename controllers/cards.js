@@ -34,7 +34,7 @@ const createCard = (req, res, next) => {
  * @param next {function}
  */
 const deleteCard = (req, res, next) => {
-  Card.findByIdAndRemove(req.params._id)
+  Card.findByIdAndDelete(req.params._id)
     .orFail()
     .catch((err) => {
       createNotFoundError(err, errorMessage.CARD_NOT_FOUND);

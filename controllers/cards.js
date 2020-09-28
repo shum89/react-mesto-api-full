@@ -1,4 +1,5 @@
 const Card = require('../models/card');
+const UnauthorisedError = require('../errors/UnauthorisedError');
 const { createNotFoundError, createBadRequestError } = require('../helpers/errorHandler');
 const { errorMessage } = require('../constants/errorMessages');
 
@@ -34,12 +35,19 @@ const createCard = (req, res, next) => {
  * @param next {function}
  */
 const deleteCard = (req, res, next) => {
-  Card.findByIdAndDelete(req.params._id)
+  Card.findById(req.params._id)
     .orFail()
     .catch((err) => {
       createNotFoundError(err, errorMessage.CARD_NOT_FOUND);
     })
-    .then((card) => res.send({ data: card }))
+    .then((card) => {
+      if (req.user._id === card.owner.toString()) {
+        card.remove();
+        res.send({ card });
+      } else {
+        throw new UnauthorisedError({ message: 'You can remove only your own cards' });
+      }
+    })
     .catch(next);
 };
 

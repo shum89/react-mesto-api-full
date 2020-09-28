@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { errorHandler, createNotFoundError, createBadRequestError } = require('../helpers/errorHandler');
 const { errorMessage } = require('../constants/errorMessages');
@@ -7,6 +9,7 @@ const { errorMessage } = require('../constants/errorMessages');
  * @param res {object} response object
  * @param next {function}
  */
+const { JWT_SECRET } = process.env;
 const getAllUsers = (req, res, next) => {
   User.find({}).then((users) => {
     res.send({ data: users });
@@ -36,11 +39,30 @@ const getUser = (req, res, next) => {
  * @param next {function}
  */
 const createUser = (req, res, next) => {
-  const { name, avatar, about } = req.body;
-  User.create({ name, avatar, about })
+  const {
+    name, avatar, about, email, password,
+  } = req.body;
+  bcrypt.hash(password, 10).then((hash) => User.create({
+    name, avatar, about, email, password: hash,
+  })
     .catch((err) => createBadRequestError(err, errorMessage.INCORRECT_USER_DATA))
-    .then((user) => res.send({ data: user }))
-    .catch(next);
+    .then((user) => {
+      const {
+        name,
+        avatar,
+        about,
+        email,
+        _id,
+      } = user;
+      res.send({
+        name,
+        avatar,
+        about,
+        email,
+        _id,
+      });
+    })
+    .catch(next));
 };
 
 /**
@@ -65,6 +87,22 @@ const updateUser = (req, res, next) => {
     })
     .then((user) => res.send({ data: user }))
     .catch(next);
+};
+
+const login = (req, res, next) => {
+  const { email, password } = req.body;
+  return User.findUserByCredentials(email, password).then((user) => {
+    const token = jwt.sign(
+      { _id: user._id },
+      JWT_SECRET,
+      { expiresIn: '7d' },
+    );
+
+    res.cookie('jwt', token, {
+      maxAge: 360000,
+      httpOnly: true,
+    }).end();
+  }).catch(next);
 };
 /**
  * Update user avatar
@@ -96,4 +134,5 @@ module.exports = {
   createUser,
   updateUserAvatar,
   updateUser,
+  login,
 };

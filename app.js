@@ -1,15 +1,21 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { userRouter, cardsRouter } = require('./routes');
+const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
+const { userRouter, cardsRouter, authRouter } = require('./routes');
 const { limiter } = require('./helpers/limiter');
 const { errorMessage } = require('./constants/errorMessages');
+const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./helpers/logger');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
 app.use(limiter);
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -18,16 +24,11 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+app.use(requestLogger);
 
-/**
- * Temporary authorization solution
- */
-app.use((req, res, next) => {
-  req.user = {
-    _id: '5f467b46459efc584e599f12',
-  };
-  next();
-});
+app.use('/', authRouter);
+
+app.use(auth);
 
 /**
  * users router
@@ -38,6 +39,9 @@ app.use('/users', userRouter);
  * cards router
  */
 app.use('/cards', cardsRouter);
+
+app.use(errorLogger);
+app.use(errors());
 
 /**
  * handles NotFound, BadRequest, Server Errors

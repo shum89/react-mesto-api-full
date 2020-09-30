@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { errorHandler, createNotFoundError, createBadRequestError } = require('../helpers/errorHandler');
+const { DuplicateEntryError } = require('../errors/DuplicateEntryError');
+const { errorHandler, createNotFoundError } = require('../helpers/errorHandler');
 const { errorMessage } = require('../constants/errorMessages');
 /**
  * gets users JSON
@@ -45,7 +46,13 @@ const createUser = (req, res, next) => {
   bcrypt.hash(password, 10).then((hash) => User.create({
     name, avatar, about, email, password: hash,
   })
-    .catch((err) => createBadRequestError(err, errorMessage.INCORRECT_USER_DATA))
+    .catch((err) => {
+      if (err.name === 'MongoError') {
+        throw new DuplicateEntryError({ message: errorMessage.DUPLICATE_EMAIL });
+      } else {
+        next(err);
+      }
+    })
     .then((user) => {
       const {
         name,
@@ -99,9 +106,9 @@ const login = (req, res, next) => {
     );
 
     res.cookie('jwt', token, {
-      maxAge: 360000,
+      maxAge: 3600000 * 24 * 7,
       httpOnly: true,
-    }).end();
+    }).send({ message: 'Authorisation successful' });
   }).catch(next);
 };
 /**

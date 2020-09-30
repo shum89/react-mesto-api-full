@@ -18,6 +18,8 @@ const errorMessage = {
   INCORRECT_CARD_DATA: 'Incorrect card data',
   SERVER_ERROR: 'Server error',
   NOT_FOUND: 'Requested resource is not found',
+  DUPLICATE_EMAIL: 'User with this email already exists',
+  DENY_CARD_REMOVE: 'You can remove only your own cards',
 };
 
 module.exports = {

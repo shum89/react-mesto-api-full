@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/express-mesto.iml" filepath="$PROJECT_DIR$/.idea/express-mesto.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../sprint4/.idea/sprint4.iml" filepath="$PROJECT_DIR$/../sprint4/.idea/sprint4.iml" />
     </modules>
   </component>
 </project>

@@ -1,5 +1,5 @@
 const Card = require('../models/card');
-const UnauthorisedError = require('../errors/UnauthorisedError');
+const PermissionError = require('../errors/PermissionError');
 const { createNotFoundError, createBadRequestError } = require('../helpers/errorHandler');
 const { errorMessage } = require('../constants/errorMessages');
 
@@ -45,7 +45,7 @@ const deleteCard = (req, res, next) => {
         card.remove();
         res.send({ card });
       } else {
-        throw new UnauthorisedError({ message: 'You can remove only your own cards' });
+        throw new PermissionError({ message: errorMessage.DENY_CARD_REMOVE });
       }
     })
     .catch(next);

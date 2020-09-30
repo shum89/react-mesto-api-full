@@ -4,15 +4,18 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 const { userRouter, cardsRouter, authRouter } = require('./routes');
 const { limiter } = require('./helpers/limiter');
 const { errorMessage } = require('./constants/errorMessages');
 const auth = require('./middlewares/auth');
+const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./helpers/logger');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
+app.use(helmet());
 app.use(limiter);
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -40,7 +43,15 @@ app.use('/users', userRouter);
  */
 app.use('/cards', cardsRouter);
 
+/**
+ * Handles Resource Not Found Error
+ */
+app.use(() => {
+  throw new NotFoundError({ message: errorMessage.NOT_FOUND });
+});
+
 app.use(errorLogger);
+
 app.use(errors());
 
 /**
@@ -53,15 +64,6 @@ app.use((err, req, res, next) => {
   }
   res.status(500).send({ message: `${errorMessage.SERVER_ERROR}: ${err.message}` });
   next();
-});
-
-/**
- * Handles Resource Not Found Error
- */
-app.use((req, res) => {
-  res
-    .status(404)
-    .send({ message: errorMessage.NOT_FOUND });
 });
 
 app.listen(PORT, () => {

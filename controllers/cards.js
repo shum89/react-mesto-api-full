@@ -42,8 +42,8 @@ const deleteCard = (req, res, next) => {
     })
     .then((card) => {
       if (req.user._id === card.owner.toString()) {
-        card.remove();
-        res.send({ card });
+        Card.findByIdAndDelete(req.params._id)
+          .then((cardData) => res.send({ cardData })).catch(next);
       } else {
         throw new PermissionError({ message: errorMessage.DENY_CARD_REMOVE });
       }

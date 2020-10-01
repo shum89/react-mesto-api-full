@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { DuplicateEntryError } = require('../errors/DuplicateEntryError');
+const DuplicateEntryError = require('../errors/DuplicateEntryError');
 const { errorHandler, createNotFoundError } = require('../helpers/errorHandler');
 const { errorMessage } = require('../constants/errorMessages');
 /**
@@ -10,7 +10,7 @@ const { errorMessage } = require('../constants/errorMessages');
  * @param res {object} response object
  * @param next {function}
  */
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 const getAllUsers = (req, res, next) => {
   User.find({}).then((users) => {
     res.send({ data: users });
@@ -101,13 +101,14 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password).then((user) => {
     const token = jwt.sign(
       { _id: user._id },
-      JWT_SECRET,
+      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
       { expiresIn: '7d' },
     );
 
     res.cookie('jwt', token, {
       maxAge: 3600000 * 24 * 7,
       httpOnly: true,
+      sameSite: true,
     }).send({ message: 'Authorisation successful' });
   }).catch(next);
 };

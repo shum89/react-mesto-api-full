@@ -54,19 +54,8 @@ const createUser = (req, res, next) => {
       }
     })
     .then((user) => {
-      const {
-        name,
-        avatar,
-        about,
-        email,
-        _id,
-      } = user;
       res.send({
-        name,
-        avatar,
-        about,
-        email,
-        _id,
+        name: user.name, about: user.about, avatar, email: user.email,
       });
     })
     .catch(next));

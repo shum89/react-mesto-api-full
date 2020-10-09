@@ -25,13 +25,13 @@ POST https://api.shumakov.students.nomoreparties.xyz/signup
 
 Передать объект
 
-`{
-  "name": "Good Boy",
-  "about": "Perfect Being",
-  "avatar": "https://thesmartcanine.com/wp-content/uploads/2019/01/australian-shepherd-dog-breed.jpg",
-   "email": "example@exmaple.ru",
-   "password": "password"
-}`
+{
+  "name": "Good Boy",<br/>
+  "about": "Perfect Being",<br/>
+  "avatar": "https://thesmartcanine.com/wp-content/uploads/2019/01/australian-shepherd-dog-breed.jpg", <br/>
+   "email": "example@exmaple.ru",<br/>
+   "password": "password"<br/>
+}
 
 * Успешный запрос возвращает объект пользователя со статусом 200.
 

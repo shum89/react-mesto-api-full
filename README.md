@@ -25,7 +25,7 @@ POST https://api.shumakov.students.nomoreparties.xyz/signup
 
 Передать объект
 
-{
+>{
   "name": "Good Boy",<br/>
   "about": "Perfect Being",<br/>
   "avatar": "https://thesmartcanine.com/wp-content/uploads/2019/01/australian-shepherd-dog-breed.jpg", <br/>
@@ -45,10 +45,10 @@ POST https://api.shumakov.students.nomoreparties.xyz/signin
 
 Передать объект
 
-`{
-   "email": "example@exmaple.ru",
-   "password": "password"
-}`
+>{
+   "email": "example@exmaple.ru",<br/>
+   "password": "password"<br/>
+}
 
 * Успешный запрос возвращает сообщение о успешной авторизации со статусом 200.
 
@@ -61,10 +61,10 @@ PATCH https://api.shumakov.students.nomoreparties.xyz/users/me
 
 Передать объект
 
-`{
-   "name": "Good Boy",
-   "about": "Perfect being"
-}`
+>{
+   "name": "Good Boy",<br/>
+   "about": "Perfect being"<br/>
+}
 
 * Успешный запрос возвращает объект пользователя со статусом 200.
 
@@ -76,10 +76,10 @@ PATCH https://api.shumakov.students.nomoreparties.xyz/users/me/avatar
 
 Передать объект
 
-`{
-   "name": "Good Boy",
-   "about": "Perfect being"
-}`
+>{
+   "name": "Good Boy",<br/>
+   "about": "Perfect being"<br/>
+}
 
 * Успешный запрос возвращает объект пользователя со статусом 200.
 
@@ -91,10 +91,10 @@ POST https://api.shumakov.students.nomoreparties.xyz/cards
 
 Передать объект
 
-`{
+>{
    "name": "New Card",
    "link": "https://thesmartcanine.com/wp-content/uploads/2019/01/australian-shepherd-dog-breed.jpg",
-}`
+}
 
 * Успешный запрос возвращает объект карточки со статусом 200.
 

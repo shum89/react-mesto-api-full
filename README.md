@@ -25,14 +25,15 @@ POST https://api.shumakov.students.nomoreparties.xyz/signup
 
 Передать объект
 
->{
-  "name": "Good Boy",<br/>
-  "about": "Perfect Being",<br/>
-  "avatar": "https://thesmartcanine.com/wp-content/uploads/2019/01/australian-shepherd-dog-breed.jpg", <br/>
-   "email": "example@exmaple.ru",<br/>
-   "password": "password"<br/>
+```
+{
+  "name": "Good Boy",
+  "about": "Perfect Being",
+  "avatar": "https://thesmartcanine.com/wp-content/uploads/2019/01/australian-shepherd-dog-breed.jpg",
+   "email": "example@exmaple.ru",
+   "password": "password"
 }
-
+```
 * Успешный запрос возвращает объект пользователя со статусом 200.
 
 * Если пользователь уже существует приходит ответ со статусом 409 и ошибкой
@@ -45,10 +46,12 @@ POST https://api.shumakov.students.nomoreparties.xyz/signin
 
 Передать объект
 
->{
-   "email": "example@exmaple.ru",<br/>
-   "password": "password"<br/>
+```
+{
+   "email": "example@exmaple.ru",
+   "password": "password"
 }
+```
 
 * Успешный запрос возвращает сообщение о успешной авторизации со статусом 200.
 
@@ -61,10 +64,12 @@ PATCH https://api.shumakov.students.nomoreparties.xyz/users/me
 
 Передать объект
 
->{
-   "name": "Good Boy",<br/>
-   "about": "Perfect being"<br/>
+```
+{
+   "name": "Good Boy",
+   "about": "Perfect being"
 }
+```
 
 * Успешный запрос возвращает объект пользователя со статусом 200.
 
@@ -75,12 +80,12 @@ PATCH https://api.shumakov.students.nomoreparties.xyz/users/me
 PATCH https://api.shumakov.students.nomoreparties.xyz/users/me/avatar
 
 Передать объект
-
->{
+```
+{
    "name": "Good Boy",<br/>
    "about": "Perfect being"<br/>
 }
-
+```
 * Успешный запрос возвращает объект пользователя со статусом 200.
 
 * Если введены некорректные данные приходит ответ со статусом 400 и ошибкой валидации.
@@ -90,12 +95,12 @@ PATCH https://api.shumakov.students.nomoreparties.xyz/users/me/avatar
 POST https://api.shumakov.students.nomoreparties.xyz/cards
 
 Передать объект
-
->{
+```
+{
    "name": "New Card",
    "link": "https://thesmartcanine.com/wp-content/uploads/2019/01/australian-shepherd-dog-breed.jpg",
 }
-
+```
 * Успешный запрос возвращает объект карточки со статусом 200.
 
 * Если введены некорректные данные приходит ответ со статусом 400 и ошибкой валидации.

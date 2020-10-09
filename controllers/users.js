@@ -47,7 +47,7 @@ const createUser = (req, res, next) => {
     name, avatar, about, email, password: hash,
   })
     .catch((err) => {
-      if (err.name === 'MongoError') {
+      if (err.name === 'MongoError' || err.code === 11000) {
         throw new DuplicateEntryError({ message: errorMessage.DUPLICATE_EMAIL });
       } else {
         next(err);

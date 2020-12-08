@@ -12,7 +12,7 @@
 * MongoDB
 
 ##Домен
-api.shumakov.sh.nomoreparties.xyz/
+api.sh.nomoreparties.xyz/
 
 ##Публичный IP-адрес
 178.154.247.123

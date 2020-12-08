@@ -12,10 +12,10 @@
 * MongoDB
 
 ##Домен
-api.shumakov.students.nomoreparties.xyz/
+api.shumakov.sh.nomoreparties.xyz/
 
 ##Публичный IP-адрес
-178.154.224.135
+178.154.247.123
 
 
 ## Запуск проекта
